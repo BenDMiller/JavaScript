@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecaster</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="weatherbox">
+            <form class="searchsystem">
+                <div class="search">
+                    <input type="text" placeholder="Enter City Name" spellcheck="false" name="Search Bar">
+                </div>
+                <div class="buttons">
+                    <input type="button" value="Search" name="Search">
+                </div>
+            </form>
+            <div class="location">
+                <H1 id="location"> Search a Location</H1>
+            </div>
+            <div class="today">
+                <H1 id="temp" class="temp">--</H1>
+            </div> 
+            <div class="forecast">
+                <strong id="one" class="one">--</strong>
+                <strong id="two" class="two">--</strong>
+                <strong id="three" class="three">--</strong>
+                <strong id="four" class="four">--</strong>
+                <strong id="five" class="five">--</strong>
+
+                <strong id="onedata" class="onedata">--</strong>
+                <strong id="twodata" class="twodata">--</strong>
+                <strong id="threedata" class="threedata">--</strong>
+                <strong id="fourdata" class="fourdata">--</strong>
+                <strong id="fivedata" class="fivedata">--</strong>
+
+                <strong id="onedata2" class="onedata2">--</strong>
+                <strong id="twodata2" class="twodata2">--</strong>
+                <strong id="threedata2" class="threedata2">--</strong>
+                <strong id="fourdata2" class="fourdata2">--</strong>
+                <strong id="fivedata2" class="fivedata2">--</strong>
+
+            </div>
+        </div>
+    </div>
+<script>
+
+
+const APIKey = "6ffcd0cc76492d5ff58e8b223650adee";
+const APIURL = "https://api.openweathermap.org/data/2.5/weather?units=imperial&q=";
+const APIURLfive = "https://api.openweathermap.org/data/2.5/forecast?units=imperial&q=";
+
+const searchBox = document.querySelector('.search input');
+const searchBtn = document.querySelector('.buttons input[name="Search"]');
+
+// Function to group temperature data by date
+function groupByDate(data) {
+  const groupedData = {};
+  data.list.forEach(entry => {
+    const date = entry.dt_txt.split(" ")[0]; // Extract date from dt_txt
+    if (!groupedData[date]) {
+      groupedData[date] = [];
+    }
+    groupedData[date].push(entry.main.temp); // Store temperature for each date
+  });
+  return groupedData;
+}
+
+// Function to find max and min temperature for each date
+function findMaxMinTemperature(groupedData) {
+  const result = {};
+  const letters = ["A", "B", "C", "D", "E"];
+  var i = 0;
+  for (const date in groupedData) {
+    const temperatures = groupedData[date];
+    const maxTemp = Math.max(...temperatures);
+    const minTemp = Math.min(...temperatures);
+    result[letters[i]] = { maxTemp, minTemp };
+    i+=1;
+  }
+  return result;
+}
+
+async function checkWeather(city){
+    const response = await fetch(APIURL + city +`&appid=${APIKey}`);
+    var data = await response.json();
+    const response2 = await fetch(APIURLfive + city +`&appid=${APIKey}`);
+    var data2 = await response2.json();
+
+    // Group data by date
+    const groupedData = groupByDate(data2);
+
+    // Find max and min temperature for each date
+    const maxMinTemperatures = findMaxMinTemperature(groupedData);
+
+    // Log the result
+    console.log(data);
+    console.log(data2);
+    console.log("Max and Min Temperatures for Each Day:", maxMinTemperatures);
+
+    document.getElementById("location").innerHTML = data.name;
+    document.getElementById("temp").innerHTML = Math.round(data.main.temp) + "°F";
+    document.getElementById("onedata").innerHTML = Math.round(data.main.temp) + "°F";
+    document.getElementById("twodata").innerHTML = Math.round(maxMinTemperatures.B.maxTemp) + "°F";
+    document.getElementById("threedata").innerHTML = Math.round(maxMinTemperatures.C.maxTemp) + "°F";
+    document.getElementById("fourdata").innerHTML = Math.round(maxMinTemperatures.D.maxTemp) + "°F";
+    document.getElementById("fivedata").innerHTML = Math.round(maxMinTemperatures.E.maxTemp) + "°F";
+    document.getElementById("onedata2").innerHTML = Math.round(maxMinTemperatures.A.minTemp) + "°F";
+    document.getElementById("twodata2").innerHTML = Math.round(maxMinTemperatures.B.minTemp) + "°F";
+    document.getElementById("threedata2").innerHTML = Math.round(maxMinTemperatures.C.minTemp) + "°F";
+    document.getElementById("fourdata2").innerHTML = Math.round(maxMinTemperatures.D.minTemp) + "°F";
+    document.getElementById("fivedata2").innerHTML = Math.round(maxMinTemperatures.E.minTemp) + "°F";
+}
+
+searchBtn.addEventListener("click", ()=>{checkWeather(searchBox.value)});
+
+  
+</script>
+</body>
+<script src="main.js"></script>
+</html>

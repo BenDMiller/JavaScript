@@ -1,0 +1,131 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+.container{
+    width: 100%;
+    height: 100vh;
+    background-color: darkblue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weatherbox{
+    background: linear-gradient(135deg, #00feba, #5b548a );
+    padding: 20px;
+    border-radius: 10px;
+}
+
+form .searchsystem{
+    justify-items: center;
+    align-items: center;
+}
+
+form .search{
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+}
+.search input{
+    border: 0;
+    outline: 0;
+    background: #ebfffc;
+    color: #555;
+    padding: 10px 25px;
+    height: 40px;
+    border-radius: 20px;
+    flex: 1;
+    
+}
+form .display input{
+    text-align: right;
+    flex: 1;
+    font-size: 45;
+    box-shadow: none;
+}
+.buttons{
+   padding: 5px;
+   display: flex;
+   justify-content: center;
+}
+.buttons input{
+    border: 0;
+    outline: 0;
+    background: #ebfffc;
+    color: #555;
+    padding: 10px 25px;
+    height: 30px;
+    border-radius: 15px;
+    flex: 1;
+    margin-bottom: 10px;
+}
+.location{
+    text-align: center;
+}
+.today{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+.forecast{
+    display: grid;
+    grid-template-columns: repeat(5 20px);
+    grid-template-rows: 15px 15px 15px;
+    grid-gap: 10px;
+    grid-template-areas:
+    "a b c d e"
+    "f g h i j"
+    "k l m n o";
+    justify-items: center;
+    align-items: center;
+}
+.forecast.one{
+    grid-area: a;
+}
+.forecast.onedata{
+    grid-area: h;
+}
+.forecast.onedata2{
+    grid-area: k;
+}
+.forecast.two{
+    grid-area: b;
+}
+.forecast.twodata{
+    grid-area: i;
+}
+.forecast.twodata2{
+    grid-area: l;
+}
+.forecast.three{
+    grid-area: c;
+}
+.forecast.threedata{
+    grid-area: j;
+}
+.forecast.threedata2{
+    grid-area: m;
+}
+.forecast.four{
+    grid-area: d;
+}
+.forecast.fourdata{
+    grid-area: k;
+}
+.forecast.fourdata2{
+    grid-area: n;
+}
+.forecast.five{
+    grid-area: e;
+}
+.forecast.fivedata{
+    grid-area: l;
+}
+.forecast.fivedata2{
+    grid-area: o;
+}
